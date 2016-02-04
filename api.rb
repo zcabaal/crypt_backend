@@ -4,7 +4,7 @@ class API < Grape::API
   version :v1, using: :path
   format :json
   default_format :json
-  prefix :views
+  prefix :api
 
   use Rack::Session::Cookie, secret: ENV['SESSION_SECRET']
   use OmniAuth::Builder do

@@ -12,7 +12,7 @@ SimpleCov.formatter = SimpleCov::Formatter::CSVFormatter
 SimpleCov.coverage_dir(ENV['COVERAGE_REPORTS'])
 SimpleCov.start
 
-require './api'
+require_relative '../api'
 
 describe :API do
   include Rack::Test::Methods
