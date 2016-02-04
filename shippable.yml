@@ -7,19 +7,22 @@ services:
 
 env:
   global:
-    - APP_NAME=crypt_backend
+    - APP_NAME=crypt-staging
     - MONGOLAB_URI=mongodb://localhost/test
     - CI_REPORTS=shippable/testresults/results.xml COVERAGE_REPORTS=shippable/codecoverage
-
+    - secure: qSFHIysF0RLSeWUKopLdVStjYrwGaMzcyClL0sjoH5vET95YjytDfVZnOn+n10J7t3qU9teXKUfq922v2snOXt3AeEOnnqswVGIWajan7MjcaE9MlRqsLheM1QGBXAHOcXRJrg0ZyVtjezOYO3Jy71MCJbgx5i8ccshaSZF/e3PGfJzs8qhoO4JoOX4gBricxdSa/+JIK4OdwNQQL3wcIbaqQNPUHKgkCJaKNeA4vmUHeqmleBPVIYdI6Zr1cVeAnAAGLrayvKG7Qy0u21QTBdO6flITlhilpCPQGly0YJaQiTHl/3dLPCAOKCCHiVF6Uhp3N4UdDYAj3W+c+ij4AQ==
+    - secure: 0Aqygp/ngwuQyC1kJmmHKlJdqM7rZ/v7ROdWpfUiWTFatc94PfNqx/7FwOVOe17kEwaur+kjXipPC8gwLQ3JjjN1DTiYkPrtnSls3RIDo+2LsUuw06K0QKhHZMFeWo0keiyMMxg6jhd1FtXphlBsnCl3SYBna7BgSui2C45hevgFsYHhJ15qDvyV/YZu+dRIMhH1uFAkXe/OO8fubR1G6jejzgPmlSWvR9ZHyOcpsVdwc9QPO54zvGP8qKI13ucLnDYii1BjwF77h7RhR34cgQJQ3c1D7w9MRb8RwDoOAseyaegtDDNhqiY7ibMX/Ow+kT5EIDpfnBFDIoBHerbhcGZzfdkqglBOGSRnC+5OInbF6AKkIP1hS4ZRf7WCu8lnzHlPb14a7dSLHY9j+JxI0cIbGwlp7wbbKoez3kMMR5QUn7RhG/uNOFisbzwqA8GCzx/YQphGf6r6rmHeL0Sc+zcAkIUXXaidrC9/vtjtHi69IRHEU+QapP5pB8z0AXUiJoyQTNSaSq5IVccZq8s1+Orf0/RTCNxd9gKfhIccdbUVYq9ljv+wj4/J9C/GYp+8KAdAqprwKsXIcQgyxWkA3VJxhTUzyyF0kYEpR+pqHLwyQQ6ca0su3FTlkDnkcftBnAQ2MQafolrq63GdTyqLelx7D17iv1kjPtMq3bzKxIZ9/KYVYeovoI56bpzv4hcMTB7fPj2mqTir7ygxO+xvMmIGmIdSfy/KoaG35Pr8in28WS1yxdmGffLFK/G/h1e+wPw1DuRhudMszOJKpr/H2Jf1IcBnIQcOhX/fIxP1Cs5bBxSGinDgnB1GMqEHMS1dyTgQflkYQs8s+I+3WMygnu6F4DDOHes0DkhK8HsG1noiVuG8yVSC6r1hF3UMg1PbBDd/jsXmfH81nPfpg/mFYHa4PvbB1o2QhGrqDOGONd0dsty4y+ZpqF+ODFmSPMtPLfNNpQp9t0/abhopsuhrxunHJHKReHurBBAFznoypVrBJWy5XHzg3TctVT4rhdpM
 before_install:
-  - which heroku || wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+  - if [ "$BRANCH" == "master" ]; then which heroku || wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh; fi
 
 before_script:
   - mkdir -p shippable/testresults
   - mkdir -p shippable/codecoverage
 
 after_success:
-  - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku
-  - git remote -v | grep ^heroku || heroku git:remote --ssh-git --app $APP_NAME
-  - git push -f heroku $BRANCH:master
-  - heroku run rake db:migrate
+- if [ "$BRANCH" == "master" ]; then
+  test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku;
+  git remote -v | grep ^heroku || heroku git:remote --ssh-git --app $APP_NAME;
+  git push -f heroku master;
+  heroku run rake db:migrate;
+fi
