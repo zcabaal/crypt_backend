@@ -6,6 +6,7 @@ Bundler.require(:default,:development)
 Dotenv.load
 Mongoid.load!('mongoid.yml', :development)
 
+require './models'
 require './web'
-require './api'
-run Rack::Cascade.new [Web, API]
+require './api/root'
+run Rack::Cascade.new [Web, API::Root]

@@ -4,6 +4,7 @@ ruby "2.3.0"
 
 gem 'sinatra'
 gem 'grape'
+gem 'grape-swagger'
 gem 'mongoid'
 
 gem 'omniauth-auth0'

@@ -1,28 +1,13 @@
-ENV['RACK_ENV'] = 'test'
-require 'bundler/setup'
+require_relative 'spec_helper'
 
-Bundler.require(:default, :test)
-# noinspection RubyArgCount
-Dotenv.load
-Mongoid.load!('mongoid.yml', :test)
-
-require 'simplecov'
-require 'simplecov-csv'
-SimpleCov.formatter = SimpleCov::Formatter::CSVFormatter
-SimpleCov.coverage_dir(ENV['COVERAGE_REPORTS'])
-SimpleCov.start
-
-require_relative '../api'
-
-describe :API do
-  include Rack::Test::Methods
+describe :TransactionAPI do
 
   def app
-    API
+    API::Transaction
   end
 
   after :all do
-    Transaction.collection.drop
+    Models::Transaction.collection.drop
   end
 
   context 'user is not authenticated' do
@@ -33,7 +18,7 @@ describe :API do
   end
   context 'user is authenticated' do
     it 'should return the list of transactions' do
-      Transaction.create!(
+      Models::Transaction.create!(
           sender: 'Somebody',
           receiver: 'Somebody',
           amount: '100',
