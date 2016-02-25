@@ -1,30 +1,33 @@
-module Models
-  class User
-    include Mongoid::Document
-    field :username, type: String
-  end
+class User
+  include Mongoid::Document
+  field :username, type: String
+  embeds_many :transactions
+  embeds_many :accounts
+end
 
-  class Sender < User
-    embeds_many :transactions
-  end
-  class Receiver < User
-    embeds_many :accounts
-  end
-  class Transaction
-    include Mongoid::Document
+class Transaction
+  include Mongoid::Document
 
-    field :receiver, type: String
-    field :amount, type: BigDecimal
-    field :sent_at, type: DateTime
-    field :received_at, type: DateTime
-    embedded_in :sender
-  end
+  field :receiver, type: String
+  field :amount, type: BigDecimal
+  field :sent_at, type: DateTime
+  field :received_at, type: DateTime
+  field :token, type: String
+  field :payment_details, type: String
+  field :partial, type: String
+  field :completed, type: String
+  field :cap_reached, type: Boolean
+  field :duplicate_receiver, type: Boolean
+  field :refunded, type: Boolean
+  embedded_in :user
+end
 
-  class Account
-    include Mongoid::Document
+class Account
+  include Mongoid::Document
 
-    field :token1, type: String
-    field :token2, type: String
-    embedded_in :receiver
-  end
+  field :c, type: String
+  field :h, type: String
+  field :duplicate, type: Boolean
+  field :duplicate_with, type: BSON::ObjectId
+  embedded_in :user
 end

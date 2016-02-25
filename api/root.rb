@@ -20,11 +20,9 @@ module API
           authorization = env['HTTP_AUTHORIZATION']
           error! 'Not Authorized', 401 if authorization.nil?
           token = env['HTTP_AUTHORIZATION'].split(' ').last
-          decoded_token = JWT.decode(token,
-                                   JWT.base64url_decode(auth0_client_secret))
+          decoded_token = JWT.decode(token, JWT.base64url_decode(auth0_client_secret))
           error! 'Not Authorized', 401 if auth0_client_id != decoded_token[0]['aud']
-        rescue JWT::ExpiredSignature
-          puts 'Expired Signature'
+          return decoded_token[0]['sub']
         rescue JWT::DecodeError => e
           puts e.inspect
           error! 'Not Authorized', 401
@@ -32,9 +30,7 @@ module API
       end
     end
 
-
-    mount API::Transaction
-
+    mount API::TransactionAPI
 
   end
 end

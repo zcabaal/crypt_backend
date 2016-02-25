@@ -16,6 +16,7 @@ gem 'dotenv'
 group :test do
   gem 'rack-test'
   gem 'rspec'
+  gem 'factory_girl'
   gem 'ci_reporter_rspec'
   gem 'simplecov'
   gem 'simplecov-csv'

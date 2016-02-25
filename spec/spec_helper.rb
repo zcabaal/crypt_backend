@@ -11,14 +11,20 @@ Bundler.require(:default, :test)
 # noinspection RubyArgCount
 Dotenv.load
 Mongoid.load!('mongoid.yml', :test)
+FactoryGirl.lint
 
 require './models'
 require './web'
 require './api/root'
+require_relative 'factories'
+require_relative 'shared_examples'
 
-RSpec.configure do |c|
-  c.mock_with :rspec
-  c.include Rack::Test::Methods
-
+RSpec.configure do |config|
+  config.mock_with :rspec
+  config.include Rack::Test::Methods
+  config.include FactoryGirl::Syntax::Methods
+  config.before(:each) do
+    Mongoid.purge!
+  end
 end
 

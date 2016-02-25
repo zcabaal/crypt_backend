@@ -26,4 +26,6 @@ after_success:
       git remote -v | grep ^heroku || heroku git:remote --ssh-git --app $APP_NAME;
       git push -f heroku master;
     fi
-  - echo "Done!"
+
+after_script:
+  - exit 0
