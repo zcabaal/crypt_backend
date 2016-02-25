@@ -28,4 +28,4 @@ after_success:
     fi
 
 after_script:
-  - exit 0
+  - echo "Done"
