@@ -14,8 +14,8 @@ class Transaction
   field :received_at, type: DateTime
   field :token, type: String
   field :payment_details, type: String
-  field :partial, type: String
-  field :completed, type: String
+  field :partial, type: Boolean
+  field :completed, type: Boolean
   field :cap_reached, type: Boolean
   field :duplicate_receiver, type: Boolean
   field :refunded, type: Boolean

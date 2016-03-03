@@ -35,6 +35,7 @@ module API
     end
 
     mount API::TransactionAPI
+    mount API::ReceiverAPI
 
   end
 end
