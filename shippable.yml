@@ -4,7 +4,6 @@ rvm:
 
 services:
    - mongodb
-
 env:
   global:
     - APP_NAME=crypt-staging
@@ -18,11 +17,9 @@ before_install:
 before_script:
   - mkdir -p shippable/testresults
   - mkdir -p shippable/codecoverage
-  - source ~/.rvm/scripts/rvm
-  - rvm install $SHIPPABLE_RUBY --verify-downloads 1
-  - source ~/.bashrc && ~/.rvm/scripts/rvm && rvm use $SHIPPABLE_RUBY
+
 script:
-  - bundle exec rspec -f RspecJunitFormatter -o shippable/testresults/results.xml
+  - bundle exec rspec -f RspecJunitFormatter -o $CI_REPORTS
 after_success:
   - >
     if [ "$BRANCH" == "master" ]; then
@@ -30,6 +27,3 @@ after_success:
       git remote -v | grep ^heroku || heroku git:remote --ssh-git --app $APP_NAME;
       git push -f heroku master;
     fi
-
-after_script:
-  - echo "Done"

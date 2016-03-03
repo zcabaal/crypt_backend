@@ -7,7 +7,7 @@ gem 'grape'
 gem 'grape-active_model_serializers'
 gem 'grape-swagger'
 gem 'mongoid'
-
+gem 'rake'
 gem 'omniauth-auth0'
 gem 'puma'
 gem 'rerun'
