@@ -28,3 +28,8 @@ RSpec.configure do |config|
   end
 end
 
+def fake_authorization(id='facebook|my_user_id')
+  allow(JWT).to receive(:decode).and_return([{'aud' => ENV['AUTH0_CLIENT_ID'], 'sub' => id}])
+  env 'HTTP_AUTHORIZATION', "Bearer <some_valid_token>"
+  id
+end
