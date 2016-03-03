@@ -23,7 +23,6 @@ before_script:
   - source ~/.bashrc && ~/.rvm/scripts/rvm && rvm use $SHIPPABLE_RUBY
 script:
   - bundle exec rspec -f RspecJunitFormatter -o shippable/testresults/results.xml
-  - bundle exec rake test
 after_success:
   - >
     if [ "$BRANCH" == "master" ]; then
