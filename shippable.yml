@@ -22,7 +22,7 @@ before_script:
   - rvm install $SHIPPABLE_RUBY --verify-downloads 1
   - source ~/.bashrc && ~/.rvm/scripts/rvm && rvm use $SHIPPABLE_RUBY
 script:
-  - bundle exec spec -f JUnit -o shippable/testresults/results.xml
+  - bundle exec rspec -f JUnit -o shippable/testresults/results.xml
   - bundle exec rake test
 after_success:
   - >
