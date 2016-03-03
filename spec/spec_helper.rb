@@ -14,6 +14,7 @@ Mongoid.load!('mongoid.yml', :test)
 FactoryGirl.lint
 
 require './models'
+require './serializers'
 require './web'
 require './api/root'
 require_relative 'factories'

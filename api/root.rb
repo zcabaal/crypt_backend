@@ -4,6 +4,7 @@ module API
   class Root < Grape::API
     version :v1, using: :path
     format :json
+    formatter :json, Grape::Formatter::ActiveModelSerializers
     default_format :json
     prefix :api
 
@@ -13,6 +14,9 @@ module API
     end
 
     helpers do
+      def default_serializer_options
+        {root: false}
+      end
       def validate_token
         begin
           auth0_client_id = ENV['AUTH0_CLIENT_ID']
