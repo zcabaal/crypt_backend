@@ -1,13 +1,8 @@
 describe API::TransactionAPI do
 
-  def app
-    API::TransactionAPI
-  end
-
   describe 'GET :history' do
-    it_behaves_like('a secure api') do
-      let(:call_api) { get '/api/v1/transaction/history' }
-    end
+    let(:call_api) { get '/api/v1/transaction/history' }
+    it_behaves_like('a secure api')
     context 'user is authenticated' do
       before :each do
         @id = fake_authorization
@@ -15,15 +10,14 @@ describe API::TransactionAPI do
       it 'returns the list of transactions for the current user' do
         create :sender, id: @id, transaction_amounts: [100, 300]
         create :sender, transaction_amounts: [200, 400]
-        get '/api/v1/transaction/history'
+        call_api
         expect(last_response.status).to eq 200
-        json_response = JSON.parse last_response.body
-        expect(json_response).to contain_exactly(a_hash_including('amount' => '100.0'),
-                                                 a_hash_including('amount' => '300.0'))
+        expect(JSON.parse last_response.body).to contain_exactly(a_hash_including('amount' => '100.0'),
+                                                                 a_hash_including('amount' => '300.0'))
       end
       it 'only returns the required attributed (e.g receiver, amount) but not payment information and token' do
         create :sender, id: @id, transaction_amounts: [100]
-        get '/api/v1/transaction/history'
+        call_api
         json_response = JSON.parse last_response.body
         expect(json_response).to include(a_hash_including(
                                              "amount" => "100.0", "cap_reached" => anything, "completed" => anything,

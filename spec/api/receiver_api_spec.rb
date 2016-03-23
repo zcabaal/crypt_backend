@@ -1,7 +1,4 @@
 describe API::ReceiverAPI do
-  def app
-    API::ReceiverAPI
-  end
 
   describe 'POST add_account' do
 

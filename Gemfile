@@ -12,6 +12,7 @@ gem 'omniauth-auth0'
 gem 'puma'
 gem 'rerun'
 gem 'dotenv'
+gem 'money'
 gem 'gibberish'
 
 
