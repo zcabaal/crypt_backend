@@ -9,6 +9,7 @@ module API
           optional :to_amount, type: BigDecimal, non_negative: true
           optional :from_currency, type: Symbol, values: [:GBP], default: :GBP
           optional :to_currency, type: Symbol, values: [:ZAR], default: :ZAR
+          optional :promo_code, type: Symbol, values: []
           exactly_one_of :from_amount, :to_amount
         end
         post do
