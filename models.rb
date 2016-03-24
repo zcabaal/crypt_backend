@@ -31,3 +31,25 @@ class Account
   field :duplicate_with, type: BSON::ObjectId
   embedded_in :user
 end
+
+class GlobalPrefs
+  include Mongoid::Document
+  # todo define more fields here as needed
+  field :about, type: String
+  field :faq, type: String
+  field :privacy_policy, type: String
+  field :terms_and_conditions, type: String
+  field :sharing_url, type: String
+  field :graceful_error_message, type: String
+  field :logo_url, type: String
+  field :app_tour_messages, type: Hash
+  field :supported_currencies, type: Array
+
+  field :exchange_rates, type: Hash
+  #src: http://stackoverflow.com/questions/7120855/block-the-creation-of-multiple-object-of-a-class
+  before_validation(:ensure_has_only_one_record, :on => :create)
+
+  def ensure_has_only_one_record
+    self.errors.add :base, 'There can only be one GlobalPrefs instance.' if GlobalPrefs.all.count > 0
+  end
+end

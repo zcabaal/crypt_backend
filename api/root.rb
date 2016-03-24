@@ -37,5 +37,6 @@ module API
     mount API::TransactionAPI
     mount API::ReceiverAPI
     mount API::CalculatorAPI
+    mount API::GlobalPrefsAPI
   end
 end
