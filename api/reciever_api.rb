@@ -23,7 +23,7 @@ module API
           user = User.find id: @id
           #todo check for the uniqueness of accounts
           user.accounts << Account.new(c: params.c, h: Gibberish::SHA512(params.h))
-          {status: 'success'}.to_json
+          {status: 'success'}
         end
       end
     end

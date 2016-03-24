@@ -1,6 +1,27 @@
 describe API::TransactionAPI do
 
-  describe 'GET :history' do
+  describe 'POST create' do
+    let(:payment_token) { 'This is a payment token that corresponds to a £100 payment' }
+    let(:call_api) { post '/api/v1/transaction/create', amount: 100.0, payment_token: payment_token }
+    it_behaves_like('a secure api')
+    context 'user is authenticated' do
+      before :each do
+        @id = fake_authorization
+      end
+
+      it 'successfully creates a transaction when the payment token is valid' do
+        create :sender, id: @id, transaction_amounts: []
+        call_api
+        transaction = User.find(id = @id).transactions.last
+        expect(transaction.amount).to eq 100
+        expect(transaction.partial).to be true
+        expect(transaction.payment_details).to include("amount" => "100.0", "payment_token" => payment_token)
+        expect(transaction.token).not_to be_nil
+      end
+      it 'returns a 400 when the payment token is valid'
+    end
+  end
+  describe 'GET history' do
     let(:call_api) { get '/api/v1/transaction/history' }
     it_behaves_like('a secure api')
     context 'user is authenticated' do

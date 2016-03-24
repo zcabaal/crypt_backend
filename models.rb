@@ -10,10 +10,10 @@ class Transaction
 
   field :receiver, type: String
   field :amount, type: BigDecimal
-  field :sent_at, type: DateTime
+  field :sent_at, type: DateTime, default: -> { Time.now }
   field :received_at, type: DateTime
   field :token, type: String
-  field :payment_details, type: String
+  field :payment_details, type: Hash
   field :partial, type: Boolean
   field :completed, type: Boolean
   field :cap_reached, type: Boolean
