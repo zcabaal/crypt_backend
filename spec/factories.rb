@@ -1,6 +1,9 @@
 FactoryGirl.define do
   factory :user do
     sequence :_id
+    first_name 'User'
+    last_name 'Name'
+    email { "#{first_name}.#{last_name}@example.com" }
     factory :sender do
       transient do
         transaction_amounts [100, 200]
@@ -22,6 +25,7 @@ FactoryGirl.define do
     amount 100
     sent_at 3.days.ago
     received_at 1.day.ago
+    partial false
   end
   factory :account do
     c SecureRandom.base64 256
