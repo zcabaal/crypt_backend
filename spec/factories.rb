@@ -21,6 +21,13 @@ FactoryGirl.define do
     end
   end
 
+  factory :issue do
+    user FactoryGirl.build :user
+    type 'feedback'
+    message 'This is the best fin tech app that I have seen in my life!'
+    resolved true
+  end
+
   factory :transaction do
     amount 100
     sent_at 3.days.ago

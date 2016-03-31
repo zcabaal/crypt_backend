@@ -38,5 +38,6 @@ module API
     mount API::ReceiverAPI
     mount API::CalculatorAPI
     mount API::GlobalPrefsAPI
+    mount API::IssueAPI
   end
 end

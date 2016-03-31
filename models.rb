@@ -5,6 +5,7 @@ class User
   field :last_name, type: String
   embeds_many :transactions
   embeds_many :accounts
+  has_many :issues
 end
 
 class Transaction
@@ -17,10 +18,10 @@ class Transaction
   field :token, type: String
   field :payment_details, type: Hash
   field :partial, type: Boolean
-  field :completed, type: Boolean
+  field :completed, type: Boolean, default: false
   field :cap_reached, type: Boolean
   field :duplicate_receiver, type: Boolean
-  field :refunded, type: Boolean
+  field :refunded, type: Boolean, default: false
   embedded_in :user
 end
 
@@ -32,6 +33,16 @@ class Account
   field :duplicate, type: Boolean
   field :duplicate_with, type: BSON::ObjectId
   embedded_in :user
+end
+
+class Issue
+  include Mongoid::Document
+
+  field :type, type: String
+  field :message, type: String
+  field :created_at, type: DateTime, default: -> { Time.now }
+  field :resolved, type: Boolean, default: false
+  belongs_to :user
 end
 
 class GlobalPrefs
