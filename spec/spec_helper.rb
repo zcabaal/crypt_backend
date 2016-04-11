@@ -13,10 +13,7 @@ Dotenv.load
 Mongoid.load!('mongoid.yml', :test)
 FactoryGirl.lint
 
-require './models'
-require './serializers'
-require './web'
-require './api/root'
+require './require'
 require_relative 'factories'
 require_relative 'shared_examples'
 
@@ -27,6 +24,10 @@ RSpec.configure do |config|
   config.before(:each) do
     Mongoid.purge!
   end
+end
+
+def app
+  API::Root
 end
 
 def fake_authorization(id='facebook|my_user_id')
