@@ -41,6 +41,7 @@ class Issue
 
   field :type, type: String
   field :message, type: String
+  field :email, type: String
   field :created_at, type: DateTime, default: -> { Time.now }
   field :resolved, type: Boolean, default: false
   belongs_to :user
