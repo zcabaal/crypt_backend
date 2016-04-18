@@ -1,7 +1,6 @@
 module API
   class TransactionAPI < Grape::API
     resource :transaction do
-      desc 'RESTful Api for dealing with transactions'
       resource :create do
         params do
           requires :amount, type: BigDecimal, non_negative: true
@@ -34,10 +33,11 @@ module API
       end
       resource :history do
         desc 'List endpoint for retrieving the transaction history for the current user'
+        paginate
         get do
           id = validate_token
           user = User.find id: id
-          user.transactions
+          user.transactions.page(params.page).per(params.per_page)
         end
       end
       resource :recent_receivers do

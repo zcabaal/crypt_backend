@@ -68,6 +68,22 @@ describe API::TransactionAPI do
         expect(json_response).not_to include(a_hash_including('payment_details' => anything, 'token' => anything,
                                                               'duplicate_receiver' => anything, 'partial' => anything))
       end
+      it 'supports pagination correctly' do
+        create :sender, id: @id, transaction_amounts: 1..50
+        get '/api/v1/transaction/history', per_page: 20
+        json_response = JSON.parse last_response.body
+        expect(json_response.count).to eq 20
+        expect(json_response).to include(a_hash_including("amount" => "10.0"))
+        expect(json_response).not_to include(a_hash_including("amount" => "21.0"))
+        get '/api/v1/transaction/history', page: 3, per_page: 20
+        json_response = JSON.parse last_response.body
+        expect(json_response.count).to eq 10
+        expect(json_response).to include(a_hash_including("amount" => "49.0"))
+        expect(json_response).not_to include(a_hash_including("amount" => "31.0"))
+        get '/api/v1/transaction/history', page: 5, per_page: 20
+        json_response = JSON.parse last_response.body
+        expect(json_response.count).to eq 0
+      end
     end
   end
 
