@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :_id, :first_name, :last_name
+  attributes :_id, :given_name, :family_name
 end
 
 class TransactionSerializer < ActiveModel::Serializer

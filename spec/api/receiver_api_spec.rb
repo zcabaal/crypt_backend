@@ -45,7 +45,7 @@ describe API::ReceiverAPI do
       it 'returns a 400 when the required parameters are missing' do
         post '/api/v1/receiver/account'
         expect(last_response.status).to eq 400
-        expect(JSON.parse last_response.body).to include 'error' => 'c is missing, h is missing'
+        expect(JSON.parse last_response.body).to include 'error' => 'c is missing, c is empty, h is missing, h is empty'
       end
       it 'returns 400 when the account already exists'
     end
@@ -92,7 +92,7 @@ describe API::ReceiverAPI do
       it 'returns a 400 when the no token is missing' do
         post '/api/v1/receiver/transaction'
         expect(last_response.status).to eq 400
-        expect(JSON.parse last_response.body).to include 'error' => 'token is missing'
+        expect(JSON.parse last_response.body).to include 'error' => 'token is missing, token is empty'
       end
     end
   end

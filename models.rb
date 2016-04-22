@@ -2,8 +2,10 @@ class User
   include Mongoid::Document
   include Mongoid::Attributes::Dynamic
   field :email, type: String
-  field :first_name, type: String
-  field :last_name, type: String
+  field :name, type: String
+  field :given_name, type: String
+  field :family_name, type: String
+  field :user_id, type: String
   embeds_many :transactions
   embeds_many :accounts
   has_many :issues

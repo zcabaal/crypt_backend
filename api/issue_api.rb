@@ -3,8 +3,8 @@ module API
     resource :issue do
       params do
         optional :type, type: Symbol, default: :support
-        requires :email, type: String
-        requires :message, type: String
+        requires :email, type: String, allow_blank: false, email: true
+        requires :message, type: String, allow_blank: false
       end
       post do
         @id = nil

@@ -17,11 +17,11 @@ describe API::IssueAPI do
       end
       it 'returns a 400 if no message is provided' do
         post '/api/v1/issue', email: email
-        expect(JSON.parse last_response.body).to include 'error' => 'message is missing'
+        expect(JSON.parse last_response.body).to include 'error' => 'message is missing, message is empty'
       end
       it 'returns a 400 if no email is provided' do
         post '/api/v1/issue', message: message
-        expect(JSON.parse last_response.body).to include 'error' => 'email is missing'
+        expect(JSON.parse last_response.body).to include 'error' => 'email is missing, email is empty, email is not valid'
       end
     end
 

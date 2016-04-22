@@ -39,5 +39,6 @@ module API
     mount API::CalculatorAPI
     mount API::GlobalPrefsAPI
     mount API::IssueAPI
+    mount API::ProfileAPI
   end
 end

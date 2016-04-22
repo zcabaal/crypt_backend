@@ -33,7 +33,7 @@ describe API::TransactionAPI do
       end
       it 'returns a 400 when the payment token is missing' do
         post '/api/v1/transaction/create', amount: 100.0
-        expect(JSON.parse last_response.body).to include 'error' => 'payment_token is missing'
+        expect(JSON.parse last_response.body).to include 'error' => 'payment_token is missing, payment_token is empty'
       end
       it 'returns a 400 when the amount is missing' do
         post '/api/v1/transaction/create', payment_token: payment_token
@@ -99,7 +99,7 @@ describe API::TransactionAPI do
         receiver1 = 'receiver1'
         receiver2 = 'receiver2'
         user = create :sender, id: @id, transaction_amounts: [100, 300, 500]
-        create :receiver, id: receiver1, first_name: 'John', last_name: 'Smith'
+        create :receiver, id: receiver1, given_name: 'John', family_name: 'Smith'
         create :receiver, id: receiver2
         user.transactions[0].receiver = receiver1
         user.transactions[1].receiver = receiver2
@@ -109,9 +109,9 @@ describe API::TransactionAPI do
         json_response = JSON.parse last_response.body
         expect(json_response).to include(
                                      a_hash_including(
-                                         "_id" => receiver1, "first_name" => "John", "last_name" => "Smith"),
+                                         "_id" => receiver1, "given_name" => "John", "family_name" => "Smith"),
                                      a_hash_including(
-                                         "_id" => receiver2, "first_name" => "User", "last_name" => "Name"),
+                                         "_id" => receiver2, "given_name" => "User", "family_name" => "Name"),
                                  )
         expect(json_response).not_to include(
                                          a_hash_including(

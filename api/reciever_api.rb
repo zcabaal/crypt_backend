@@ -9,8 +9,8 @@ module API
           {accounts: user.accounts.count}
         end
         params do
-          requires :c, type: String
-          requires :h, type: String
+          requires :c, type: String, allow_blank: false
+          requires :h, type: String, allow_blank: false
         end
         post do
           @id = validate_token
@@ -22,7 +22,7 @@ module API
       end
       resource :transaction do
         params do
-          requires :token, type: String
+          requires :token, type: String, allow_blank: false
         end
         post do
           @id = validate_token

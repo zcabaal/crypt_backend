@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :user do
     sequence :_id
-    first_name 'User'
-    last_name 'Name'
-    email { "#{first_name}.#{last_name}@example.com" }
+    given_name 'User'
+    family_name 'Name'
+    email { "#{given_name}.#{family_name}@example.com" }
     factory :sender do
       transient do
         transaction_amounts [100, 200]

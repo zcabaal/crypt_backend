@@ -5,7 +5,7 @@ module API
         params do
           requires :amount, type: BigDecimal, non_negative: true
           optional :currency, type: Symbol, values: [:GBP], default: :GBP
-          requires :payment_token, type: String
+          requires :payment_token, type: String, allow_blank: false
           optional :receiver, type: String
           optional :payment_method, type: Symbol, values: [:stripe], default: :stripe
         end
